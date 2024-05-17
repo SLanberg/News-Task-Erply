@@ -24,17 +24,19 @@ const CustomButton: React.FC<CustomButtonProps> = ({
       variant={variant}
       onClick={onClick}
       sx={{
-        display: 'block',
+        display: 'flex', // Use Flexbox
+        justifyContent: 'center', // Center horizontally
+        alignItems: 'center', // Center vertically
         borderRadius: '8px',
         padding: padding,
-        fontSize: '14px', // 14px which is text-sm
+        fontSize: '14px',
         color: 'white',
-        backgroundColor: '#D4C1AB',
+        backgroundColor: 'var(--button-color)',
         outline: 'none',
         margin: margin,
-        ...sx, // Merge custom styles
+        ...sx,
         '&:hover': {
-          backgroundColor: '#D2AA7C',
+          backgroundColor: 'var(--button-hover-color)',
         },
       }}
     >

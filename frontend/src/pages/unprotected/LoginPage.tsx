@@ -22,25 +22,25 @@ const HomePage = () => {
   return (
     <div id={`${homePageStyles.background}`}>
       <Navbar />
-      <div className={'mx-auto max-w-7xl flex justify-center'}>
-        <div className='box-border bg-[#E0E0E0] w-[580px] border-1 m-10 rounded-[10px] shadow-lg flex overflow-hidden'>
+      <div className={'mx-auto max-w-7xl flex justify-center text-skin-primary'}>
+        <div className='box-border bg-skin-infoBox w-[580px] border-1 mt-20 rounded-[10px] shadow-lg flex overflow-hidden'>
           <div className='box-border mt-5 mx-10 flex flex-col'>
-            <h1 className='text-center text-[22px] m-2 font-bold'>
+            <h1 className='text-center text-[22px] m-2 font-bold '>
               Reading «News» is now easier than ever.
             </h1>
 
             <p className='text-center m-2 font-bold text-[14px]'>
               Unlock the Power of Data with Your Own API Key! Seamlessly access
               the latest news and insights tailored to your needs. Sign up now
-              at{' '}
+              at {''}
               <a
                 href='https://newsapi.org/register'
                 target='_blank'
-                className='text-[#0000FF]'
+                className='text-[#00e1ed]'
               >
-                newsapi.org/register{' '}
+                newsapi.org/register
               </a>
-              and start exploring limitless possibilities today!
+              {''} and start exploring limitless possibilities today!
             </p>
             <p className='text-center m-4 font-bold text-[14px]'>
               After registration enter your email and API key down below and
@@ -48,16 +48,18 @@ const HomePage = () => {
             </p>
 
             <CustomInput
+            className='bg-skin-input'
               placeholder='Email'
               onChange={(e) => setEmail(e.target.value)}
             ></CustomInput>
             <CustomInput
+            className='bg-skin-input'
               placeholder='Key'
               onChange={(e) => setKey(e.target.value)}
             ></CustomInput>
             <CustomButton onClick={handleSubmit}>Enter</CustomButton>
 
-            <p className='text-center text-[11px] m-5 text-[#989898]'>
+            <p className='text-center text-[11px] m-5'>
               By pressing «Enter» you agree with <br /> <u>privacy policy</u>
             </p>
           </div>

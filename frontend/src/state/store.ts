@@ -1,11 +1,13 @@
-import { configureStore } from "@reduxjs/toolkit";
-import counterReducer from "./counter/counterSlice";
+import { configureStore } from '@reduxjs/toolkit';
+import imageReducer from './images/imageSlice';
 
-export const store = configureStore({
+const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    image: imageReducer,
   },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+
+export default store;
