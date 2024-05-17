@@ -1,0 +1,27 @@
+services:
+  # backend:
+  #   image: backend
+  #   build: ./backend/
+  #   ports:
+  #     - "8000:8000"
+
+  frontend:
+    image: frontend
+    build: ./frontend/
+    container_name: frontend-news
+    ports:
+    - "8001:5173"
+
+    # Defines actions to be taken during development.
+    command: npm run dev
+    # Specifies directories/files to watch for changes.
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend
+          target: /app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
+   

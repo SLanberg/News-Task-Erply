@@ -1,0 +1,17 @@
+* {
+  font-family: 'Prompt', serif;
+}
+
+html {
+  overflow: scroll;
+  background: hsl(var(--color-primary-900));
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  background: transparent; /* make scrollbar transparent */
+}
+
+a {
+  text-decoration: none;
+}

@@ -1,0 +1,30 @@
+@layer base {
+  :root {
+    --color-text-primary: 111 114 185;
+
+    //--color-primary-50: 32 32 78;
+    //--color-primary-100: 32 32 78;
+    --color-primary-200: 32 32 78;
+    --color-primary-300: 0 0 0;
+    --color-primary-400: 0 0 0;
+    --color-primary-500: 0 0 0;
+    --color-primary-600: 0 0 0;
+    --color-primary-700: 0 0 0;
+    --color-primary-800: 32 32 78;
+    --color-primary-900: 0 0 95;
+  }
+  .dark-theme {
+    --color-text-primary: 111 114 185;
+
+    --color-primary-50: 236 78 86;
+    --color-primary-100: 236 81 79;
+    --color-primary-200: 236 80 64;
+    --color-primary-300: 236 81 67;
+    --color-primary-400: 236 80 63;
+    --color-primary-500: 236 81 66;
+    --color-primary-600: 236 63 60;
+    --color-primary-700: 236 42 50;
+    --color-primary-800: 236 30 24;
+    --color-primary-900: 236 30 17;
+  }
+}
