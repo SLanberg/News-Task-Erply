@@ -1,34 +1,41 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ClipLoader } from 'react-spinners';
 import { RootState } from '../../../state/store';
 import { setLoading } from '../../../state/images/imageSlice';
 
-interface BoxProps {
-  id: number;
+interface Source {
+  id: string | null;
+  name: string;
 }
 
-const Box: React.FC<BoxProps> = ({ id }) => {
-  // Retrieve the loading state for the specific image from the Redux store
-  const loading = useSelector((state: RootState) => state.image.loading[id] ?? true);
+interface Article {
+  source: Source;
+  author: string | null;
+  title: string;
+  description: string | null;
+  url: string;
+  urlToImage: string | null;
+  publishedAt: string;
+  content: string | null;
+}
 
-  // Get the dispatch function from the Redux store
+interface BoxProps {
+  id: number;
+  article: Article;
+}
+
+const Box: React.FC<BoxProps> = ({ id, article }) => {
+  const loading = useSelector((state: RootState) => state.image.loading[id] ?? true);
   const dispatch = useDispatch();
 
-  // Simulate a network delay using useEffect and setTimeout
   useEffect(() => {
-    // Set loading state to true when component mounts
     dispatch(setLoading({ id, loading: true }));
-
-    // Simulate a 10-second network delay
-    const timeoutId = setTimeout(() => {
-      // After delay, set the loading state to false
-      dispatch(setLoading({ id, loading: false }));
-    }, 10000000);
-
-    // Clear the timeout if the component unmounts
-    return () => clearTimeout(timeoutId);
   }, [dispatch, id]);
+
+  const handleImageLoad = () => {
+    dispatch(setLoading({ id, loading: false }));
+  };
 
   return (
     <div className='box-border bg-skin-boxColor border-1 m-4 rounded-[10px] shadow-lg overflow-hidden'>
@@ -38,20 +45,26 @@ const Box: React.FC<BoxProps> = ({ id }) => {
             <ClipLoader />
           </div>
         )}
-        <img
-          src='https://docs.flutter.dev/assets/images/dash/dash-fainting.gif'
-          alt='Description of the image'
-          className={`h-full w-full object-cover ${loading ? 'hidden' : 'block'}`}
-        />
+        {article.urlToImage && (
+          <img
+            src={article.urlToImage}
+            alt={article.title}
+            onLoad={handleImageLoad}
+            className={`h-full w-full object-cover ${loading ? 'hidden' : 'block'}`}
+          />
+        )}
       </div>
       <div className='flex'>
-        <p className='m-2 text-skin-highlight'>NEWS</p>
+        <p className='m-2 text-skin-highlight'>{article.source.name}</p>
       </div>
       <div className='flex h-[125px] text-skin-primary'>
-        <p className='m-2'>Dash fainted</p>
+        <p className='m-2'>{article.title}</p>
       </div>
       <div className='mt-auto'>
-        <p className='m-2 text-[12px] text-[#ACACAC] font-light'>2 days ago</p>
+        <a href={article.url} target="_blank" rel="noopener noreferrer" className='m-2 text-skin-highlight'>
+          Read more
+        </a>
+        <p className='m-2 text-[12px] text-[#ACACAC] font-light'>{new Date(article.publishedAt).toDateString()}</p>
       </div>
     </div>
   );
