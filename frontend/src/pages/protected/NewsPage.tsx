@@ -5,7 +5,7 @@ import useFetchNews from '../../hooks/useFetchNews';
 
 const NewsPage: React.FC = () => {
   const { articles, loading, error, hasMore, loadMore } =
-    useFetchNews('Bitcoin');
+    useFetchNews('crypto');
   const observer = useRef<IntersectionObserver | null>(null);
 
   const lastArticleElementRef = useCallback(
