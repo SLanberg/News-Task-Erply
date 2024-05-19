@@ -30,14 +30,21 @@ const Box: React.FC<BoxProps> = ({ id, article }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // This useEffect hook runs when the component mounts or when the `id` prop changes.
+    // It dispatches an action to Redux to set the loading state for the specified `id` to true.
     dispatch(setLoading({ id, loading: true }));
   }, [dispatch, id]);
 
   const handleImageLoad = () => {
+    // This function is triggered when the image finishes loading.
+    // It dispatches an action to Redux to set the loading state for the specified `id` to false.
     dispatch(setLoading({ id, loading: false }));
   };
 
   const truncateDescription = (description: string | null, maxLength: number) => {
+    // This function truncates the provided `description` string if its length exceeds `maxLength`.
+    // If the `description` is null or empty, it returns an empty string.
+    // Otherwise, it returns the truncated string followed by an ellipsis.
     if (!description) return '';
     return description.length > maxLength ? `${description.substring(0, maxLength)}...` : description;
   };
