@@ -22,7 +22,7 @@ const InputField: React.FC<InputFieldProps> = ({
       placeholder={placeholder}
       value={value}
       onChange={onChange}
-      className={`block shadow-sm rounded-[8px] w-100 p-[12px] text-sm text-black outline-none m-[10px] ${className}`}
+      className={`block shadow-sm rounded-[8px] w-100 p-[12px] text-sm text-primary outline-none m-[10px] ${className}`}
       {...props}
     />
   );

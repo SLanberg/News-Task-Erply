@@ -3,16 +3,21 @@ import IconButton from '@mui/material/IconButton/IconButton';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import CustomButton from '../buttons/CustomButton';
+
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { setApiKey } from '../../../state/slices/newsApiSlice';
 
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const { theme, handleThemeSwitch } = useTheme();
 
   
   const handleClick = () => {
+    dispatch(setApiKey('')); 
     navigate('/');
   };
 

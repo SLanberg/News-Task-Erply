@@ -1,5 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
 
+
+import { useSelector } from 'react-redux';
+import { selectApiKey } from '../state/slices/newsApiSlice';
+
+
 interface Source {
   id: string | null;
   name: string;
@@ -26,6 +31,8 @@ interface FetchNewsResult {
 }
 
 const useFetchNews = (query: string): FetchNewsResult => {
+  const apiKey = useSelector(selectApiKey);
+
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -36,7 +43,7 @@ const useFetchNews = (query: string): FetchNewsResult => {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${query}&pageSize=10&page=${page}&apiKey=2eb8735ae52f4179a92f4e401ae69092`
+        `https://newsapi.org/v2/everything?q=${query}&pageSize=10&page=${page}&apiKey=${apiKey}`
       );
       const data = await response.json();
       if (response.ok) {
@@ -57,7 +64,7 @@ const useFetchNews = (query: string): FetchNewsResult => {
       setError(err.message || 'Error fetching news');
     }
     setLoading(false);
-  }, [query, page]);
+  }, [apiKey, query, page]);
 
   useEffect(() => {
     fetchArticles();

@@ -2,7 +2,10 @@ import Navbar from '../../components/ui/navbar/Navbar';
 import CustomInput from '../../components/ui/inputs/CustomInput';
 import CustomButton from '../../components/ui/buttons/CustomButton';
 import { useState } from 'react';
+
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { setApiKey } from '../../state/slices/newsApiSlice';
 
 import homePageStyles from '../../styles/login_page.module.scss';
 
@@ -10,12 +13,12 @@ const HomePage = () => {
   const [email, setEmail] = useState('');
   const [key, setKey] = useState('');
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = () => {
-    console.log('Email:', email);
-    console.log('Key:', key);
-
+    // Dispatch action to set API key
+    dispatch(setApiKey(key)); 
     navigate('/news');
   };
 

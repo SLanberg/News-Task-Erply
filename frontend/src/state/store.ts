@@ -1,8 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import imageReducer from './images/imageSlice';
+import imageReducer from './slices/imageSlice';
+import apiReducer from './slices/newsApiSlice';
 
 const store = configureStore({
   reducer: {
+    api: apiReducer,
     image: imageReducer,
   },
 });

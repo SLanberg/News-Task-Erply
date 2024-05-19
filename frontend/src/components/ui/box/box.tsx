@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ClipLoader } from 'react-spinners';
 import { RootState } from '../../../state/store';
-import { setLoading } from '../../../state/images/imageSlice';
+import { setLoading } from '../../../state/slices/imageSlice';
 
 interface Source {
   id: string | null;
