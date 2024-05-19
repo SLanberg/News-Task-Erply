@@ -37,9 +37,14 @@ const Box: React.FC<BoxProps> = ({ id, article }) => {
     dispatch(setLoading({ id, loading: false }));
   };
 
+  const truncateDescription = (description: string | null, maxLength: number) => {
+    if (!description) return '';
+    return description.length > maxLength ? `${description.substring(0, maxLength)}...` : description;
+  };
+
   return (
-    <div className='box-border bg-skin-boxColor border-1 m-4 rounded-[10px] shadow-lg overflow-hidden'>
-      <div className='h-[250px] relative'>
+    <div className='box-border bg-skin-boxColor border-1 m-4 rounded-[10px] shadow-lg overflow-hidden flex flex-col h-full'>
+      <div className='h-[600px] relative'>
         {loading && (
           <div className='absolute inset-0 flex items-center justify-center bg-skin-boxColor'>
             <ClipLoader />
@@ -54,17 +59,16 @@ const Box: React.FC<BoxProps> = ({ id, article }) => {
           />
         )}
       </div>
-      <div className='flex'>
+      <div className='flex flex-col flex-grow'>
         <p className='m-2 text-skin-highlight'>{article.source.name}</p>
-      </div>
-      <div className='flex h-[125px] text-skin-primary'>
-        <p className='m-2'>{article.title}</p>
-      </div>
-      <div className='mt-auto'>
-        <a href={article.url} target="_blank" rel="noopener noreferrer" className='m-2 text-skin-highlight'>
-          Read more
-        </a>
-        <p className='m-2 text-[12px] text-[#ACACAC] font-light'>{new Date(article.publishedAt).toDateString()}</p>
+        <h2 className='m-2 font-bold text-skin-primary'>{article.title}</h2>
+        <p className='m-2 text-skin-primary'>{truncateDescription(article.description, 300)}</p>
+        <div className='flex flex-col items-start mt-auto'>
+          <a href={article.url} target="_blank" rel="noopener noreferrer" className='m-2 text-skin-highlight'>
+            Read more
+          </a>
+          <p className='m-2 text-[12px] text-[#ACACAC] font-light'>{new Date(article.publishedAt).toDateString()}</p>
+        </div>
       </div>
     </div>
   );

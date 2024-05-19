@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 interface Source {
   id: string | null;
@@ -14,43 +14,60 @@ interface Article {
   urlToImage: string | null;
   publishedAt: string;
   content: string | null;
+  status?: string;
 }
 
-interface NewsApiResponse {
-  status: string;
-  totalResults: number;
+interface FetchNewsResult {
   articles: Article[];
+  loading: boolean;
+  error: string | null;
+  hasMore: boolean;
+  loadMore: () => void;
 }
 
-const useFetchNews = (query: string) => {
+const useFetchNews = (query: string): FetchNewsResult => {
   const [articles, setArticles] = useState<Article[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [page, setPage] = useState<number>(1);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+
+  const fetchArticles = useCallback(async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(
+        `https://newsapi.org/v2/everything?q=${query}&pageSize=10&page=${page}&apiKey=2eb8735ae52f4179a92f4e401ae69092`
+      );
+      const data = await response.json();
+      if (response.ok) {
+        const newArticles = data.articles.filter(
+          (article: Article) => article.source.name !== '[Deleted]' && article.source.name !== '[Removed]'
+        );
+        setArticles((prev) => {
+          const uniqueArticles = newArticles.filter(
+            (newArticle: Article) => !prev.some((article) => article.url === newArticle.url)
+          );
+          return [...prev, ...uniqueArticles];
+        });
+        setHasMore(newArticles.length > 0);
+      } else {
+        setError(data.message || 'Error fetching news');
+      }
+    } catch (err: any) {
+      setError(err.message || 'Error fetching news');
+    }
+    setLoading(false);
+  }, [query, page]);
 
   useEffect(() => {
-    const fetchNews = async () => {
-      try {
-        const response = await fetch(
-          `https://newsapi.org/v2/everything?q=${query}&apiKey=825335131e4b43058c5b6da7bc1720fc`
-        );
+    fetchArticles();
+  }, [fetchArticles]);
 
-        if (!response.ok) {
-          throw new Error(`Error: ${response.statusText}`);
-        }
+  const loadMore = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
 
-        const data: NewsApiResponse = await response.json();
-        setArticles(data.articles);
-      } catch (err: any) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchNews();
-  }, [query]);
-
-  return { articles, loading, error };
+  return { articles, loading, error, hasMore, loadMore };
 };
 
 export default useFetchNews;
