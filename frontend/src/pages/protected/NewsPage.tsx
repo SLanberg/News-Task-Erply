@@ -5,8 +5,7 @@ import useFetchNews from '../../hooks/useFetchNews';
 import { ClipLoader } from 'react-spinners';
 
 const NewsPage: React.FC = () => {
-  const { articles, loading, error, hasMore, loadMore } =
-    useFetchNews('crypto');
+  const { articles, loading, error, hasMore, loadMore } = useFetchNews('crypto');
   const observer = useRef<IntersectionObserver | null>(null);
   
 
@@ -40,13 +39,13 @@ const NewsPage: React.FC = () => {
       <Navbar />
       <div className='flex justify-center'>
         <div className='bg-skin-boxBackgroundSection w-full max-w-[1700px] mt-5 rounded-t-[12px] min-h-screen'>
-          <div className='grid gap-4 max-w-8xl'>
+          <div className='grid gap-2 max-w-8xl mx-5'>
             {articles.map((article, index) => {
               // Determine if the current article is the last one in the list.
               const isLastArticle = index === articles.length - 1;
 
               // Determine if the current article is the first in a row (every 4th article).
-              const isFirstInRow = index % 4 === 0;
+              const isFirstInRow = index % 3 === 0;
 
               // Determine if the current article should span the full width of the row.
               const isSingleFullWidthArticle = isFirstInRow;
@@ -59,7 +58,7 @@ const NewsPage: React.FC = () => {
                   className={`${
                     // Conditionally set the class name based on whether the article should span the full width of the row.
                     isSingleFullWidthArticle
-                      ? 'col-span-1 sm:col-span-1 xl:col-span-3' // Full width class
+                      ? 'col-span-1 sm:col-span-1 md:col-span-2' // Full width class
                       : 'col-span-1' // Regular width class
                   }`}
                 >
@@ -76,7 +75,7 @@ const NewsPage: React.FC = () => {
           )}
           {error && (
             <div
-              className='m-5 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative'
+              className='mx-5 mt-10 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative'
               role='alert'
             >
               <strong className='font-bold'>Error:</strong>

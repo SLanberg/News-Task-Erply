@@ -50,7 +50,7 @@ const Box: React.FC<BoxProps> = ({ id, article }) => {
   };
 
   return (
-    <div className='box-border bg-skin-boxColor border-1 m-4 rounded-[10px] shadow-lg overflow-hidden flex flex-col h-full'>
+    <div className='box-border bg-skin-boxColor border-1 mt-5 rounded-[10px] shadow-lg overflow-hidden flex flex-col h-full'>
       <div className='h-[600px] relative'>
         {loading && (
           <div className='absolute inset-0 flex items-center justify-center bg-skin-boxColor'>

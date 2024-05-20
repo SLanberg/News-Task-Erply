@@ -8,6 +8,7 @@ const getInitialStateFromLocalStorage = () => {
   const storedApiKey = localStorage.getItem('apiKey');
   return {
     apiKey: storedApiKey ? storedApiKey : null,
+    query: '', 
   };
 };
 
@@ -20,11 +21,15 @@ export const apiSlice = createSlice({
       // Update local storage when API key changes
       localStorage.setItem('apiKey', action.payload);
     },
+    setQuery: (state, action) => {
+      state.query = action.payload;
+    },
   },
 });
 
-export const { setApiKey } = apiSlice.actions;
+export const { setApiKey, setQuery } = apiSlice.actions;
 
 export const selectApiKey = (state: RootState) => state.api.apiKey;
+export const selectQuery = (state: RootState) => state.api.query;
 
 export default apiSlice.reducer;

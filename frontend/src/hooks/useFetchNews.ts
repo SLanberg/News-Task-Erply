@@ -49,14 +49,16 @@ const useFetchNews = (query: string): FetchNewsResult => {
   };
 
   const fetchArticles = useCallback(async () => {
-    if (hasErrorOccurred) return; // Stop fetching if an error has occurred
+    if (!query || hasErrorOccurred) return;
+
 
     setLoading(true);
     try {
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${query}&pageSize=10&page=${page}&apiKey=${apiKey}`
+        `https://newsapi.org/v2/everything?q=${query}&pageSize=12&page=${page}&apiKey=${apiKey}`
       );
       const data = await response.json();
+      
       if (response.ok) {
         const newArticles = data.articles.filter(
           (article: Article) => article.source.name !== '[Deleted]' && article.source.name !== '[Removed]'
