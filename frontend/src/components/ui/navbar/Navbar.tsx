@@ -9,12 +9,13 @@ import CustomButton from '../buttons/CustomButton';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setApiKey, setQuery } from '../../../state/slices/newsApiSlice';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 
 
 const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const { theme, handleThemeSwitch } = useTheme();
   const [searchValue, setSearchValue] = useState('');
@@ -31,7 +32,10 @@ const Navbar = () => {
   const handleEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       dispatch(setQuery(searchValue));
-      setSearchValue('');
+      // setSearchValue('');
+      if (inputRef.current) {
+        inputRef.current.blur();
+      }
     }
   };
 
@@ -50,6 +54,7 @@ const Navbar = () => {
               <input
                   type='text'
                   placeholder='Search'
+                  ref={inputRef}
                   value={searchValue}
                   onChange={handleChange} // Handle input change
                   onKeyDown={handleEnterPress}  // Handle enter key press

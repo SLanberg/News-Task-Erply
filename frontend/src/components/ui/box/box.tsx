@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ClipLoader } from 'react-spinners';
+import { FadeLoader } from 'react-spinners';
 import { RootState } from '../../../state/store';
 import { setLoading } from '../../../state/slices/imageSlice';
 
@@ -54,7 +54,7 @@ const Box: React.FC<BoxProps> = ({ id, article }) => {
       <div className='h-[600px] relative'>
         {loading && (
           <div className='absolute inset-0 flex items-center justify-center bg-skin-boxColor'>
-            <ClipLoader />
+              <FadeLoader color="hsl(var(--color-text-highlight))" />
           </div>
         )}
         {article.urlToImage && (

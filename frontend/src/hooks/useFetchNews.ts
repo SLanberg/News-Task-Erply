@@ -38,7 +38,6 @@ const useFetchNews = (): FetchNewsResult => {
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [hasErrorOccurred, setHasErrorOccurred] = useState<boolean>(false); // State to track if an error occurred
 
-  const placeholderImage = 'images/No-Image-Placeholder.png'; // Path to the placeholder image
 
   const isValidUrl = (url: string | null) => {
     try {
@@ -64,7 +63,7 @@ const useFetchNews = (): FetchNewsResult => {
           (article: Article) => article.source.name !== '[Deleted]' && article.source.name !== '[Removed]'
         ).map((article: Article) => ({
           ...article,
-          urlToImage: isValidUrl(article.urlToImage) ? article.urlToImage : placeholderImage,
+          urlToImage: isValidUrl(article.urlToImage) ? article.urlToImage : null,
         }));
         
         if (page === 1) {

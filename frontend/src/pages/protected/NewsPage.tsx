@@ -1,14 +1,10 @@
 import React, { useCallback, useRef } from 'react';
-import { useSelector } from 'react-redux'; // Import useSelector hook from react-redux
 import Navbar from '../../components/ui/navbar/Navbar';
 import Box from '../../components/ui/box/box';
 import useFetchNews from '../../hooks/useFetchNews';
-import { ClipLoader } from 'react-spinners';
-import { selectQuery } from '../../state/slices/newsApiSlice'; // Import selectQuery selector from apiSlice
 
 const NewsPage: React.FC = () => {
-  const query = useSelector(selectQuery); // Access query from Redux store
-  const { articles, loading, error, hasMore, loadMore } = useFetchNews(query); // Pass query to useFetchNews hook
+  const { articles, loading, error, hasMore, loadMore } = useFetchNews(); // Pass query to useFetchNews hook
   const observer = useRef<IntersectionObserver | null>(null);
 
   const lastArticleElementRef = useCallback(
@@ -51,11 +47,6 @@ const NewsPage: React.FC = () => {
               );
             })}
           </div>
-          {loading && (
-            <div className='absolute inset-0 flex items-center justify-center bg-skin-boxColor'>
-              <ClipLoader />
-            </div>
-          )}
           {error && (
             <div
               className='mx-5 mt-10 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative'
