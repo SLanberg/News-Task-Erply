@@ -1,9 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-
-
 import { useSelector } from 'react-redux';
 import { selectApiKey } from '../state/slices/newsApiSlice';
-
 
 interface Source {
   id: string | null;
@@ -38,8 +35,11 @@ const useFetchNews = (query: string): FetchNewsResult => {
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState<number>(1);
   const [hasMore, setHasMore] = useState<boolean>(true);
+  const [hasErrorOccurred, setHasErrorOccurred] = useState<boolean>(false); // State to track if an error occurred
 
   const fetchArticles = useCallback(async () => {
+    if (hasErrorOccurred) return; // Stop fetching if an error has occurred
+
     setLoading(true);
     try {
       const response = await fetch(
@@ -59,19 +59,23 @@ const useFetchNews = (query: string): FetchNewsResult => {
         setHasMore(newArticles.length > 0);
       } else {
         setError(data.message || 'Error fetching news');
+        setHasErrorOccurred(true); // Set error state if an error occurs
       }
     } catch (err: any) {
       setError(err.message || 'Error fetching news');
+      setHasErrorOccurred(true); // Set error state if an error occurs
     }
     setLoading(false);
-  }, [apiKey, query, page]);
+  }, [apiKey, query, page, hasErrorOccurred]);
 
   useEffect(() => {
     fetchArticles();
   }, [fetchArticles]);
 
   const loadMore = () => {
-    setPage((prevPage) => prevPage + 1);
+    if (!hasErrorOccurred) { // Only load more if no error has occurred
+      setPage((prevPage) => prevPage + 1);
+    }
   };
 
   return { articles, loading, error, hasMore, loadMore };

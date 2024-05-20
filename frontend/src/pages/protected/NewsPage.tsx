@@ -2,11 +2,13 @@ import React, { useCallback, useRef } from 'react';
 import Navbar from '../../components/ui/navbar/Navbar';
 import Box from '../../components/ui/box/box';
 import useFetchNews from '../../hooks/useFetchNews';
+import { ClipLoader } from 'react-spinners';
 
 const NewsPage: React.FC = () => {
   const { articles, loading, error, hasMore, loadMore } =
     useFetchNews('crypto');
   const observer = useRef<IntersectionObserver | null>(null);
+  
 
   const lastArticleElementRef = useCallback(
     // This function is defined using useCallback hook to memoize it and prevent unnecessary re-renders.
@@ -57,7 +59,7 @@ const NewsPage: React.FC = () => {
                   className={`${
                     // Conditionally set the class name based on whether the article should span the full width of the row.
                     isSingleFullWidthArticle
-                      ? 'col-span-1 sm:col-span-1 lg:col-span-1 xl:col-span-3' // Full width class
+                      ? 'col-span-1 sm:col-span-1 xl:col-span-3' // Full width class
                       : 'col-span-1' // Regular width class
                   }`}
                 >
@@ -67,8 +69,20 @@ const NewsPage: React.FC = () => {
               );
             })}
           </div>
-          {loading && <div>Loading more articles...</div>}
-          {error && <div>Error: {error}</div>}
+          {loading && (
+            <div className='absolute inset-0 flex items-center justify-center bg-skin-boxColor'>
+              <ClipLoader />
+            </div>
+          )}
+          {error && (
+            <div
+              className='m-5 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative'
+              role='alert'
+            >
+              <strong className='font-bold'>Error:</strong>
+              <span className='block sm:inline'>{error}</span>
+            </div>
+          )}
         </div>
       </div>
     </>
