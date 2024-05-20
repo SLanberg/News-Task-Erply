@@ -2,6 +2,7 @@ import React, { useCallback, useRef } from 'react';
 import Navbar from '../../components/ui/navbar/Navbar';
 import Box from '../../components/ui/box/box';
 import useFetchNews from '../../hooks/useFetchNews';
+import { FadeLoader } from 'react-spinners';
 
 const NewsPage: React.FC = () => {
   const { articles, loading, error, hasMore, loadMore } = useFetchNews(); // Pass query to useFetchNews hook
@@ -47,6 +48,11 @@ const NewsPage: React.FC = () => {
               );
             })}
           </div>
+          {loading && (
+            <div className='absolute inset-0 flex items-center justify-center bg-skin-boxColor'>
+              <FadeLoader color="hsl(var(--color-text-highlight))" />
+          </div>
+          )}
           {error && (
             <div
               className='mx-5 mt-10 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative'
