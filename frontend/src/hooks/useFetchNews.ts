@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
-import { selectApiKey } from '../state/slices/newsApiSlice';
+import { selectApiKey, selectQuery } from '../state/slices/newsApiSlice';
 
 interface Source {
   id: string | null;
@@ -27,8 +27,9 @@ interface FetchNewsResult {
   loadMore: () => void;
 }
 
-const useFetchNews = (query: string): FetchNewsResult => {
+const useFetchNews = (): FetchNewsResult => {
   const apiKey = useSelector(selectApiKey);
+  const query = useSelector(selectQuery);
 
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -51,7 +52,6 @@ const useFetchNews = (query: string): FetchNewsResult => {
   const fetchArticles = useCallback(async () => {
     if (!query || hasErrorOccurred) return;
 
-
     setLoading(true);
     try {
       const response = await fetch(
@@ -66,12 +66,19 @@ const useFetchNews = (query: string): FetchNewsResult => {
           ...article,
           urlToImage: isValidUrl(article.urlToImage) ? article.urlToImage : placeholderImage,
         }));
-        setArticles((prev) => {
-          const uniqueArticles = newArticles.filter(
-            (newArticle: Article) => !prev.some((article) => article.url === newArticle.url)
-          );
-          return [...prev, ...uniqueArticles];
-        });
+        
+        if (page === 1) {
+          // If it's the first page, reset articles
+          setArticles(newArticles);
+        } else {
+          // Otherwise, append new articles
+          setArticles((prev) => {
+            const uniqueArticles = newArticles.filter(
+              (newArticle: Article) => !prev.some((article) => article.url === newArticle.url)
+            );
+            return [...prev, ...uniqueArticles];
+          });
+        }
         setHasMore(newArticles.length > 0);
       } else {
         setError(data.message || 'Error fetching news');
@@ -93,6 +100,13 @@ const useFetchNews = (query: string): FetchNewsResult => {
       setPage((prevPage) => prevPage + 1);
     }
   };
+
+  // Clear articles when query changes
+  useEffect(() => {
+    setPage(1); // Reset page to 1 when query changes
+    setArticles([]); // Clear articles when query changes
+    setHasErrorOccurred(false); // Reset error state
+  }, [query]);
 
   return { articles, loading, error, hasMore, loadMore };
 };
