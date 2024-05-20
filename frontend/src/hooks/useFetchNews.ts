@@ -37,6 +37,17 @@ const useFetchNews = (query: string): FetchNewsResult => {
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [hasErrorOccurred, setHasErrorOccurred] = useState<boolean>(false); // State to track if an error occurred
 
+  const placeholderImage = 'images/No-Image-Placeholder.png'; // Path to the placeholder image
+
+  const isValidUrl = (url: string | null) => {
+    try {
+      new URL(url!);
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
   const fetchArticles = useCallback(async () => {
     if (hasErrorOccurred) return; // Stop fetching if an error has occurred
 
@@ -49,7 +60,10 @@ const useFetchNews = (query: string): FetchNewsResult => {
       if (response.ok) {
         const newArticles = data.articles.filter(
           (article: Article) => article.source.name !== '[Deleted]' && article.source.name !== '[Removed]'
-        );
+        ).map((article: Article) => ({
+          ...article,
+          urlToImage: isValidUrl(article.urlToImage) ? article.urlToImage : placeholderImage,
+        }));
         setArticles((prev) => {
           const uniqueArticles = newArticles.filter(
             (newArticle: Article) => !prev.some((article) => article.url === newArticle.url)
