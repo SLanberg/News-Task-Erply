@@ -66,6 +66,8 @@ const useFetchNews = (): FetchNewsResult => {
           urlToImage: isValidUrl(article.urlToImage) ? article.urlToImage : null,
         }));
         
+        
+
         if (page === 1) {
           // If it's the first page, reset articles
           setArticles(newArticles);
