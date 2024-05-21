@@ -16,10 +16,29 @@ const HomePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSubmit = () => {
-    // Dispatch action to set API key
-    dispatch(setApiKey(key)); 
-    navigate('/news');
+  const handleSubmit = async () => {
+    const userData = { email, key };
+  
+    try {
+      const response = await fetch('http://localhost:8000/authentication/users/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(userData),
+        mode: 'cors' // This ensures CORS mode is enabled
+      });
+  
+      if (response.ok) {
+        dispatch(setApiKey(key));
+        navigate('/news');
+      } else {
+        console.error('Error:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (
