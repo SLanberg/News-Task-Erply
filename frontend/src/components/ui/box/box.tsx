@@ -34,10 +34,11 @@ const Box: React.FC<BoxProps> = ({ id, article }) => {
   const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
-    // This useEffect hook runs when the component mounts or when the `id` prop changes.
-    // It dispatches an action to Redux to set the loading state for the specified `id` to true.
-    dispatch(setLoading({ id, loading: true }));
-  }, [dispatch, id]);
+    if (!article.urlToImage) {
+      // Dispatch action to set loading to false
+      dispatch(setLoading({ id, loading: false }));
+    }
+  }, [article.urlToImage, dispatch, id]);
 
   const handleImageLoad = () => {
     // This function is triggered when the image finishes loading.
@@ -51,11 +52,6 @@ const Box: React.FC<BoxProps> = ({ id, article }) => {
     setImageError(true);
     dispatch(setLoading({ id, loading: false })); // Set loading state to false
   };
-
-  if (!article.urlToImage) {
-    // Dispatch action to set loading to false
-    dispatch(setLoading({ id, loading: false }));
-  }
 
   const truncateDescription = (
     description: string | null,
