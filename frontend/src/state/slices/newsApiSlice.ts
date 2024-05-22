@@ -14,7 +14,8 @@ const getInitialStateFromLocalStorage = () => {
 
 export const apiSlice = createSlice({
   name: 'api',
-  initialState: getInitialStateFromLocalStorage(), // Initialize state from local storage
+  // Initialize state from local storage
+  initialState: getInitialStateFromLocalStorage(),
   reducers: {
     setApiKey: (state, action) => {
       state.apiKey = action.payload;
