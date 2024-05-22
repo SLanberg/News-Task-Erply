@@ -23,6 +23,9 @@ COPY . .
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Just for the ease of the reviewer automatically created superuser
+RUN ./manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('root', 'root@example.com', 'root')"
+
 # Expose any necessary ports
 EXPOSE 8000
 

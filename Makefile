@@ -66,10 +66,6 @@ clean:
 # 3. Ideally to have different setups for Dev, Prod, Test
 showtime:
 	@$(call print_success, "▶️ Building Project with Docker 🐋")
-	@$(call print_info, "localhost:8001")
+	@$(call print_info, "localhost:8000")
+	@$(call print_info, "localhost:5173")
 	docker compose up
-
-development:
-	@$(call print_success, "▶️ Building Project with Docker and Watch for Local Changes 👨🏻‍💻")
-	@$(call print_info, "http://localhost:8001/")
-	docker compose up --watch

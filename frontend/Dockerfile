@@ -15,5 +15,5 @@ RUN npm install
 EXPOSE 5173
 
 # Command to run your application
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "host"]
 

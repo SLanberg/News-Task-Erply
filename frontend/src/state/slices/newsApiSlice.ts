@@ -8,7 +8,7 @@ const getInitialStateFromLocalStorage = () => {
   const storedApiKey = localStorage.getItem('apiKey');
   return {
     apiKey: storedApiKey ? storedApiKey : null,
-    query: '', 
+    query: 'Bitcoin', 
   };
 };
 

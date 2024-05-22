@@ -6,11 +6,11 @@ source env/bin/activate
 
 deactivate
 
-# Django
+# Django commands
 
 pip install django
 
-django-admin startproject backend
+python3 manage.py runserver
 
 # What for?
 
@@ -18,4 +18,4 @@ There is literally only one purpose.
 
 Store email and key. Why?
 
-Because it is specified in the task and storing this on frontend is dumb.
+Because it is specified in the task and storing this on frontend is insecure.

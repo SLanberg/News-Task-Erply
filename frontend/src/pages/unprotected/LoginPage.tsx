@@ -12,6 +12,7 @@ import homePageStyles from '../../styles/login_page.module.scss';
 const HomePage = () => {
   const [email, setEmail] = useState('');
   const [key, setKey] = useState('');
+  const [error, setError] = useState(''); // New state variable for error message
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -26,18 +27,21 @@ const HomePage = () => {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
+        mode: 'cors', // This ensures CORS mode is enabled
         body: JSON.stringify(userData),
-        mode: 'cors' // This ensures CORS mode is enabled
       });
+
   
       if (response.ok) {
         dispatch(setApiKey(key));
         navigate('/news');
       } else {
-        console.error('Error:', response.statusText);
+        const errorData = await response.json();
+
+        setError(errorData.email || errorData.key || 'An error occurred');
       }
-    } catch (error) {
-      console.error('Error:', error);
+    } catch (error: any) {
+      setError('An error occurred: ' + error); 
     }
   };
 
@@ -70,15 +74,22 @@ const HomePage = () => {
             </p>
 
             <CustomInput
-            className='bg-skin-input'
+              className='bg-skin-input'
               placeholder='Email'
               onChange={(e) => setEmail(e.target.value)}
             ></CustomInput>
             <CustomInput
-            className='bg-skin-input'
+              className='bg-skin-input'
               placeholder='Key'
               onChange={(e) => setKey(e.target.value)}
             ></CustomInput>
+
+            {error && (
+              <div className='block shadow-sm rounded-[8px] w-100 p-[12px] text-sm text-primary outline-none m-[10px] bg-red-500'>
+                {error}
+              </div>
+            )}
+            
             <CustomButton onClick={handleSubmit}>Enter</CustomButton>
 
             <p className='text-center text-[11px] m-5'>
