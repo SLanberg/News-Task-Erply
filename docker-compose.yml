@@ -1,13 +1,13 @@
 services:
   backend:
-    image: backend
+    image: backend-news
     build: ./backend/
     container_name: backend-news
     ports:
       - "8000:8000"
 
   frontend:
-    image: frontend
+    image: frontend-news
     build: ./frontend/
     container_name: frontend-news
     ports:

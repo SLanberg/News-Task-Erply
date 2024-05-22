@@ -22,6 +22,8 @@ COPY . .
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
+RUN python3 manage.py makemigrations
+RUN python3 manage.py migrate --run-syncdb
 
 # Just for the ease of the reviewer automatically created superuser
 RUN ./manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('root', 'root@example.com', 'root')"
