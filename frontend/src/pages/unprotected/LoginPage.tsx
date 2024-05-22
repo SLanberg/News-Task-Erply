@@ -49,8 +49,8 @@ const HomePage = () => {
     <div id={`${homePageStyles.background}`}>
       <Navbar />
       <div className={'mx-auto max-w-7xl flex justify-center text-skin-primary'}>
-        <div className='box-border bg-skin-infoBox w-[580px] border-1 mt-20 rounded-[10px] shadow-lg flex overflow-hidden'>
-          <div className='box-border mt-5 mx-10 flex flex-col'>
+        <div className='box-border bg-skin-infoBox md:w-[580px] h-screen md:h-auto border-1 md:mt-20 md:rounded-[10px] shadow-lg flex overflow-hidden'>
+          <div className='box-border mt-10 mx-10 flex flex-col'>
             <h1 className='text-center text-[22px] m-2 font-bold '>
               Reading «News» is now easier than ever.
             </h1>

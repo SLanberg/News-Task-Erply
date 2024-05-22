@@ -80,27 +80,31 @@ const Navbar = () => {
             {/* Empty div to center the search input */}
             <div></div>
 
-            {/* Centered content */}
-            {/* Centered content */}
-            <div className='col-span-1 flex justify-center items-center text-skin-primary'>
-              <div className='relative w-full'>
-                <input
-                  type='text'
-                  placeholder='Search'
-                  ref={inputRef}
-                  value={searchValue}
-                  onChange={handleChange}
-                  onKeyDown={handleEnterPress}
-                  className='bg-skin-input border border-gray-200 border-opacity-50 rounded-[20px] px-5 py-2 focus:outline-none w-full'
-                />
-                <div
-                  className='absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer'
-                  onClick={handleSearchIconClick}
-                >
-                  <FaSearch className='h-4 w-4 text-gray-600 hover:text-skin-highlight/80 transition-colors duration-300' />
+            {showButton ? (
+              <div className='col-span-1 flex justify-center items-center text-skin-primary'>
+                <div className='relative w-full'>
+                  <input
+                    type='text'
+                    placeholder='Search'
+                    ref={inputRef}
+                    value={searchValue}
+                    onChange={handleChange}
+                    onKeyDown={handleEnterPress}
+                    className='bg-skin-input border border-gray-200 border-opacity-50 rounded-[20px] px-5 py-2 focus:outline-none w-full'
+                  />
+                  <div
+                    className='absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer'
+                    onClick={handleSearchIconClick}
+                  >
+                    <FaSearch className='h-4 w-4 text-gray-600 hover:text-skin-highlight/80 transition-colors duration-300' />
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <div></div>
+            )}
+
+
 
             {/* Right content */}
             <div className='flex justify-end items-center'>
