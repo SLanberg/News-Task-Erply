@@ -10,6 +10,7 @@ __pycache__/
 __pycache__/
 db.sqlite3
 media/
+../backend/authentication/__pycache__/__init__.cpython-310.pyc
 
 # If your project runs in a virtualenv, you might want to ignore these directories
 venv/

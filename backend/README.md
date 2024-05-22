@@ -1,6 +1,6 @@
 # Working with env
 
-python3 -m venv <myenvname>
+python3 -m venv env
 
 source env/bin/activate
 
