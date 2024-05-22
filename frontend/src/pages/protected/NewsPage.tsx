@@ -27,7 +27,7 @@ const NewsPage: React.FC = () => {
       <Navbar />
       <div className='flex justify-center'>
         <div className='bg-skin-boxBackgroundSection w-full max-w-[1900px] md:mt-[10px] rounded-t-[12px] min-h-screen relative md:mx-[10px]'>
-          <div className='grid gap-2 max-w-8xl mx-5'>
+          <div className='grid gap-2 max-w-8xl mx-5 grid-cols-1 md:grid-cols-2'>
 
             {articles.map((article, index) => {
               const isLastArticle = index === articles.length - 1;
@@ -39,9 +39,7 @@ const NewsPage: React.FC = () => {
                   key={article.url}
                   ref={isLastArticle ? lastArticleElementRef : null}
                   className={`${
-                    isSingleFullWidthArticle
-                      ? 'col-span-1 sm:col-span-1 md:col-span-2'
-                      : 'col-span-1'
+                    isSingleFullWidthArticle ? 'col-span-1 sm:col-span-1 md:col-span-2': 'col-span-1'
                   }`}
                 >
                   <Box id={index} article={article} />
