@@ -41,7 +41,7 @@ const HomePage = () => {
         setError(errorData.email || errorData.key || 'An error occurred');
       }
     } catch (error: any) {
-      setError('An error occurred: ' + error); 
+      setError(error); 
     }
   };
 
@@ -89,7 +89,7 @@ const HomePage = () => {
                 {error}
               </div>
             )}
-            
+
             <CustomButton onClick={handleSubmit}>Enter</CustomButton>
 
             <p className='text-center text-[11px] m-5'>

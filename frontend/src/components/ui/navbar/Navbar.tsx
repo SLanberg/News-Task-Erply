@@ -35,13 +35,21 @@ const Navbar = () => {
     setSearchValue(e.target.value);
   };
 
+  const handleSearch = () => {
+    dispatch(setQuery(searchValue));
+    if (inputRef.current) {
+      inputRef.current.blur();
+    }
+  };
+
   const handleEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      dispatch(setQuery(searchValue));
-      if (inputRef.current) {
-        inputRef.current.blur();
-      }
+      handleSearch();
     }
+  };
+
+  const handleSearchIconClick = () => {
+    handleSearch();
   };
 
   return (
@@ -50,8 +58,8 @@ const Navbar = () => {
       <nav className='bg-skin-navbar bg-opacity-90 backdrop-blur-sm'>
         <div className='mx-auto max-w-9xl'>
           <div className='h-16 grid grid-cols-3'>
-            {/* Empty div to center the serach input */}
-            <div />
+            {/* Empty div to center the search input */}
+            <div></div>
 
             {/* Centered content */}
             <div className='col-span-1 flex justify-center items-center text-skin-primary'>
@@ -66,7 +74,10 @@ const Navbar = () => {
                   className='bg-skin-input border border-gray-200 border-opacity-50 rounded-[20px] px-5 py-2 focus:outline-none'
                   style={{ display: showButton ? 'block' : 'none' }} // Hide/show input based on showButton state
                 />
-                <div className='absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer'>
+                <div
+                  className='absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer'
+                  onClick={handleSearchIconClick}
+                >
                   <FaSearch
                     className='h-4 w-4 text-gray-600 hover:text-skin-highlight/80 transition-colors duration-300'
                     style={{ display: showButton ? 'block' : 'none' }} // Hide/show search icon based on showButton state
@@ -77,7 +88,15 @@ const Navbar = () => {
 
             {/* Right content */}
             <div className='flex justify-end items-center'>
-            {showButton && ( // Render button only if showButton is true
+              <IconButton onClick={handleThemeSwitch}>
+                {theme === 'dark-theme' ? (
+                  <Brightness4Icon className='text-skin-highlight' />
+                ) : (
+                  <Brightness7Icon className='text-skin-highlight' />
+                )}
+              </IconButton>
+
+              {showButton && ( // Render button only if showButton is true
                 <CustomButton onClick={handleClick} padding='10px'>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -91,16 +110,6 @@ const Navbar = () => {
                   </svg>
                 </CustomButton>
               )}
-
-
-              <IconButton onClick={handleThemeSwitch}>
-                {theme === 'dark-theme' ? (
-                  <Brightness4Icon className='text-skin-highlight' />
-                ) : (
-                  <Brightness7Icon />
-                )}
-              </IconButton>
-          
             </div>
           </div>
         </div>
