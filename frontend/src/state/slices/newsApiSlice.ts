@@ -2,13 +2,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
-
 // Function to get initial state from local storage
 const getInitialStateFromLocalStorage = () => {
   const storedApiKey = localStorage.getItem('apiKey');
   return {
     apiKey: storedApiKey ? storedApiKey : null,
-    query: 'Bitcoin', 
+    query: 'Bitcoin',
   };
 };
 

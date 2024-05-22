@@ -38,7 +38,6 @@ const useFetchNews = (): FetchNewsResult => {
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [hasErrorOccurred, setHasErrorOccurred] = useState<boolean>(false); // State to track if an error occurred
 
-
   const isValidUrl = (url: string | null) => {
     try {
       new URL(url!);
@@ -54,19 +53,23 @@ const useFetchNews = (): FetchNewsResult => {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://newsapi.org/v2/everything?q=${query}&pageSize=12&page=${page}&apiKey=${apiKey}`
+        `https://newsapi.org/v2/everything?q=${query}&pageSize=12&page=${page}&apiKey=${apiKey}`,
       );
       const data = await response.json();
-      
+
       if (response.ok) {
-        const newArticles = data.articles.filter(
-          (article: Article) => article.source.name !== '[Deleted]' && article.source.name !== '[Removed]'
-        ).map((article: Article) => ({
-          ...article,
-          urlToImage: isValidUrl(article.urlToImage) ? article.urlToImage : null,
-        }));
-        
-        
+        const newArticles = data.articles
+          .filter(
+            (article: Article) =>
+              article.source.name !== '[Deleted]' &&
+              article.source.name !== '[Removed]',
+          )
+          .map((article: Article) => ({
+            ...article,
+            urlToImage: isValidUrl(article.urlToImage)
+              ? article.urlToImage
+              : null,
+          }));
 
         if (page === 1) {
           // If it's the first page, reset articles
@@ -75,7 +78,8 @@ const useFetchNews = (): FetchNewsResult => {
           // Otherwise, append new articles
           setArticles((prev) => {
             const uniqueArticles = newArticles.filter(
-              (newArticle: Article) => !prev.some((article) => article.url === newArticle.url)
+              (newArticle: Article) =>
+                !prev.some((article) => article.url === newArticle.url),
             );
             return [...prev, ...uniqueArticles];
           });
@@ -97,7 +101,8 @@ const useFetchNews = (): FetchNewsResult => {
   }, [fetchArticles]);
 
   const loadMore = () => {
-    if (!hasErrorOccurred) { // Only load more if no error has occurred
+    if (!hasErrorOccurred) {
+      // Only load more if no error has occurred
       setPage((prevPage) => prevPage + 1);
     }
   };

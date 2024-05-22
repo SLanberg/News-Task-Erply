@@ -9,7 +9,6 @@ function App() {
   return (
     <Router>
       <Routes>
- 
         <Route element={<UnauthenticatedRoutes />}>
           <Route path='/' element={<HomePage />} />
         </Route>
@@ -17,7 +16,6 @@ function App() {
         <Route element={<AuthenticatedRoutes />}>
           <Route path='/news' element={<NewsPage />} />
         </Route>
-
       </Routes>
     </Router>
   );

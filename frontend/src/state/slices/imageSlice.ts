@@ -12,7 +12,10 @@ const imageSlice = createSlice({
   name: 'image',
   initialState,
   reducers: {
-    setLoading: (state, action: PayloadAction<{ id: number; loading: boolean }>) => {
+    setLoading: (
+      state,
+      action: PayloadAction<{ id: number; loading: boolean }>,
+    ) => {
       const { id, loading } = action.payload;
       state.loading[id] = loading;
     },

@@ -19,19 +19,21 @@ const HomePage = () => {
 
   const handleSubmit = async () => {
     const userData = { email, key };
-  
-    try {
-      const response = await fetch('http://localhost:8000/authentication/users/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        mode: 'cors', // This ensures CORS mode is enabled
-        body: JSON.stringify(userData),
-      });
 
-  
+    try {
+      const response = await fetch(
+        'http://localhost:8000/authentication/users/',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          mode: 'cors', // This ensures CORS mode is enabled
+          body: JSON.stringify(userData),
+        },
+      );
+
       if (response.ok) {
         dispatch(setApiKey(key));
         navigate('/news');
@@ -41,14 +43,16 @@ const HomePage = () => {
         setError(errorData.email || errorData.key || 'An error occurred');
       }
     } catch (error: any) {
-      setError(error); 
+      setError(error);
     }
   };
 
   return (
     <div id={`${homePageStyles.background}`}>
       <Navbar />
-      <div className={'mx-auto max-w-7xl flex justify-center text-skin-primary'}>
+      <div
+        className={'mx-auto max-w-7xl flex justify-center text-skin-primary'}
+      >
         <div className='box-border bg-skin-infoBox md:w-[580px] h-screen md:h-auto border-1 md:mt-[20px] md:rounded-[10px] shadow-lg flex overflow-hidden'>
           <div className='box-border mt-10 mx-10 flex flex-col'>
             <h1 className='text-center text-[22px] m-2 font-bold '>

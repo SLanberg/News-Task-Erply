@@ -104,8 +104,6 @@ const Navbar = () => {
               <div></div>
             )}
 
-
-
             {/* Right content */}
             <div className='flex justify-end items-center'>
               <IconButton onClick={handleThemeSwitch}>

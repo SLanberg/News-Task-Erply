@@ -86,7 +86,10 @@ const Box: React.FC<BoxProps> = ({ id, article }) => {
           />
         ) : (
           <div className='absolute inset-0 flex items-center justify-center bg-skin-boxColor'>
-              <MdImageNotSupported color='hsl(var(--color-text-highlight))' size={96} />
+            <MdImageNotSupported
+              color='hsl(var(--color-text-highlight))'
+              size={96}
+            />
           </div>
         )}
       </div>
