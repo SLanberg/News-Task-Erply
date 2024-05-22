@@ -7,15 +7,17 @@ import { FaSearch } from 'react-icons/fa';
 import CustomButton from '../buttons/CustomButton';
 
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { setApiKey, setQuery } from '../../../state/slices/newsApiSlice';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 
 const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const inputRef = useRef<HTMLInputElement>(null);
   const [showButton, setShowButton] = useState(true); // State to control button visibility
+  const [loggedOut, setLoggedOut] = useState(false); // State to track if the user has logged out
 
   const { theme, handleThemeSwitch } = useTheme();
   const [searchValue, setSearchValue] = useState('');
@@ -26,9 +28,26 @@ const Navbar = () => {
     setShowButton(!!apiKey); // Set showButton based on whether apiKey is present
   }, []); // Run only once on component mount
 
+  useEffect(() => {
+    if (loggedOut) {
+      setShowButton(false);
+    } else {
+      // Check local storage for API key again in case it was set during this render cycle
+      const apiKey = localStorage.getItem('apiKey');
+      setShowButton(!!apiKey);
+    }
+  }, [loggedOut]);
+
   const handleClick = () => {
     dispatch(setApiKey(''));
-    navigate('/');
+    localStorage.removeItem('apiKey'); // Ensure API key is removed from local storage
+    setLoggedOut(true);
+    if (location.pathname === '/') {
+      // Manually trigger re-render when already on the home page
+      navigate(0);
+    } else {
+      navigate('/');
+    }
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
