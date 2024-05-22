@@ -1,0 +1,34 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django generated files
+*.log
+*.pot
+*.pyc
+__pycache__/
+db.sqlite3
+media/
+
+# If your project runs in a virtualenv, you might want to ignore these directories
+venv/
+env/
+ENV/
+
+# Secret keys and sensitive information
+*.env
+
+# IDE files
+.idea/
+.vscode/
+
+# Dependency directories
+node_modules/
+bower_components/
+
+# Static files
+staticfiles/
+
+# macOS specific files
+.DS_Store
