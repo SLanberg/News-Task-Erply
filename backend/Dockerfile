@@ -23,6 +23,7 @@ COPY . .
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 RUN python3 manage.py makemigrations
+RUN python3 manage.py migrate
 RUN python3 manage.py migrate --run-syncdb
 
 # Just for the ease of the reviewer automatically created superuser
